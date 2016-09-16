@@ -1,0 +1,45 @@
+{
+  "name": "@retailmenot/roux-handlebars-tools",
+  "version": "1.0.0",
+  "description": "Tools for working with Roux ingredient Handlebars templates",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap -Rspec test/*.js",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RetailMeNotSandbox/roux-handlebars-tools.git"
+  },
+  "engines": {
+    "node": "^4",
+    "npm": "^2.0"
+  },
+  "keywords": [
+    "roux",
+    "handlebars"
+  ],
+  "author": "RMN Engineering",
+  "contributors": [
+    "Eric Capps <ecapps@rmn.com>",
+    "Lon Ingram <lingram@rmn.com>",
+    "Kyle Smith <kbsmith@rmn.com>",
+    "Luke Zilioli <lzilioli@rmn.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@retailmenot/core-ui-eslintrc": "^4.0.1",
+    "eslint": "^2.11.1",
+    "mock-fs": "^3.6.0",
+    "tap": "^5.0.0"
+  },
+  "dependencies": {
+    "@retailmenot/core-ui-editorconfig": "^1.0.2",
+    "@retailmenot/core-ui-gitignore": "^1.0.1",
+    "@retailmenot/roux": "^1.0.1",
+    "bluebird": "^3.1.1",
+    "debug": "^2.2.0",
+    "handlebars": "^4.0.5",
+    "lodash": "^3.10.1"
+  }
+}
