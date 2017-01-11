@@ -12,8 +12,7 @@
     "url": "https://github.com/RetailMeNotSandbox/roux-handlebars-tools.git"
   },
   "engines": {
-    "node": "^4",
-    "npm": "^2.0"
+    "node": ">= 4"
   },
   "keywords": [
     "roux",
