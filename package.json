@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "tap -Rspec test/*.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -28,9 +29,9 @@
   "license": "MIT",
   "devDependencies": {
     "@retailmenot/core-ui-editorconfig": "^1.0.2",
-    "@retailmenot/core-ui-eslintrc": "^5.0.0",
+    "@retailmenot/core-ui-eslintrc": "^6.0.0",
     "@retailmenot/core-ui-gitignore": "^1.0.1",
-    "eslint": "^3.10.2",
+    "eslint": "^4.8.0",
     "mock-fs": "^3.6.0",
     "tap": "^5.0.0"
   },

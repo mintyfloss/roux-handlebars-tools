@@ -104,16 +104,16 @@ function getPartialDependencies(template, config, partials) {
 				return fs.readFileAsync(partialPath, {encoding: 'utf8'});
 			});
 		})
-		.map(function (template) {
+			.map(function (template) {
 			// recursively explore its dependencies
-			return getPartialDependencies(template, config, partials);
-		})
-		.reduce(function (partials, templatePartials) {
+				return getPartialDependencies(template, config, partials);
+			})
+			.reduce(function (partials, templatePartials) {
 			// merge discovered dependencies back into our results
-			_.assign(partials, templatePartials);
+				_.assign(partials, templatePartials);
 
-			return partials;
-		}, partials);
+				return partials;
+			}, partials);
 	});
 }
 
@@ -147,83 +147,84 @@ function resolvePartialName(partialName, config) {
 				);
 			})
 		)
-		.catch(function (error) {
-			if (!allAreENOENT(error)) {
+			.catch(function (error) {
+				if (!allAreENOENT(error)) {
 				// At least one error was not ENOENT, so reject with the original error
-				throw error;
-			}
+					throw error;
+				}
 
-			// We could not resolve to a local partial, so look for an ingredient
+				// We could not resolve to a local partial, so look for an ingredient
 
-			var parsedPartial = parseIngredientPath(partialName);
-			if (!parsedPartial) {
-				throw new Error('Could not locate a partial named ' + partialName);
-			}
+				var parsedPartial = parseIngredientPath(partialName);
+				if (!parsedPartial) {
+					throw new Error('Could not locate a partial named ' + partialName);
+				}
 
-			return rouxIngredientPantry.resolve(
+				return rouxIngredientPantry.resolve(
 					parsedPartial.pantry,
 					config
 				)
-				.then(function (pantry) {
-					if (!pantry) {
+					.then(function (pantry) {
+						if (!pantry) {
+							throw new Error(
+								util.format(
+									'Could not locate a partial named %s. No such pantry %s.',
+									partialName,
+									parsedPartial.pantry
+								)
+							);
+						}
+
+						// because we don't know where the ingredient path ends and the
+						// partial path begins, we try progressively larger prefixes of the
+						// ingredient/partial path until an ingredient is found
+						var ingredientTokens = parsedPartial.ingredient.split('/');
+						var ingredient;
+						for (var i = 0; i < ingredientTokens.length; i++) {
+							ingredient =
+							pantry.ingredients[ingredientTokens.slice(0, i + 1).join('/')];
+							if (ingredient) {
+								return ingredient;
+							}
+						}
+
+						// the parsed partial name did not resolve to an ingredient
 						throw new Error(
 							util.format(
-								'Could not locate a partial named %s. No such pantry %s.',
+								'Could not locate a partial named %s.' +
+								' No ingredient found in %s.',
 								partialName,
-								parsedPartial.pantry
+								parsedPartial.ingredient
 							)
 						);
-					}
-
-					// because we don't know where the ingredient path ends and the
-					// partial path begins, we try progressively larger prefixes of the
-					// ingredient/partial path until an ingredient is found
-					var ingredientTokens = parsedPartial.ingredient.split('/');
-					var ingredient;
-					for (var i = 0; i < ingredientTokens.length; i++) {
-						ingredient =
-							pantry.ingredients[ingredientTokens.slice(0, i + 1).join('/')];
-						if (ingredient) {
-							return ingredient;
-						}
-					}
-
-					// the parsed partial name did not resolve to an ingredient
-					throw new Error(
-						util.format(
-							'Could not locate a partial named %s. No ingredient found in %s.',
-							partialName,
-							parsedPartial.ingredient
-						)
-					);
-				})
-				.then(function (ingredient) {
+					})
+					.then(function (ingredient) {
 					// return appropriate file in the ingredient, or throw
-					if (_.endsWith(partialName, ingredient.name)) {
+						if (_.endsWith(partialName, ingredient.name)) {
 						// the partial name ends with the ingredient. return the entry point
-						return path.resolve(
-							ingredient.path,
-							ingredient.entryPoints.handlebars.filename
+							return path.resolve(
+								ingredient.path,
+								ingredient.entryPoints.handlebars.filename
+							);
+						}
+
+						// the partial names a file inside the ingredient, so remove the
+						// ingredient path from the partial name and attempt to resolve the
+						// remainder relative to the ingredient root
+						return findPathWithExtensions(
+							path.resolve(
+								ingredient.path,
+
+								// slice out the part of the partial name after the ingredient
+								partialName.slice([
+									ingredient.pantryName,
+									ingredient.name
+								].join('/').length + 1)
+							),
+							config.extensions
 						);
-					}
-
-					// the partial names a file inside the ingredient, so remove the
-					// ingredient path from the partial name and attempt to resolve the
-					// remainder relative to the ingredient root
-					return findPathWithExtensions(
-						path.resolve(
-							ingredient.path,
-
-							// slice out the part of the partial name after the ingredient
-							partialName.slice([
-								ingredient.pantryName,
-								ingredient.name
-							].join('/').length + 1)
-						),
-						config.extensions
-					);
-				});
-		});
+					});
+			});
 	});
 }
 
@@ -248,7 +249,7 @@ function normalizeConfig(config) {
 
 	config.partials = _.clone(config.partials);
 
-		// ignore the special `@partial-block` partial
+	// ignore the special `@partial-block` partial
 	config.partials['@partial-block'] = '';
 	return config;
 }
