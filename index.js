@@ -317,7 +317,7 @@ module.exports = {
 			return getPartialDependencies(template, config)
 				.then(function (dependencies) {
 					// filter any dependencies from config.partials and return the result
-					return _.pick(dependencies, function (partialPath) {
+					return _.pickBy(dependencies, function (partialPath) {
 						return partialPath !== null;
 					});
 				});
