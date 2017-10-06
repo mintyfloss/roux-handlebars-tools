@@ -4,6 +4,7 @@ This module provides tools for working with Roux ingredients that provide
 a Handlebars entry point.
 
 [![Build Status](https://travis-ci.org/RetailMeNotSandbox/roux-handlebars-tools.svg?branch=master)](https://travis-ci.org/RetailMeNotSandbox/roux-handlebars-tools)
+[![Coverage Status](https://coveralls.io/repos/github/RetailMeNotSandbox/roux-handlebars-tools/badge.svg?branch=master)](https://coveralls.io/github/RetailMeNotSandbox/roux-handlebars-tools?branch=master)
 
 ## Installation
 
