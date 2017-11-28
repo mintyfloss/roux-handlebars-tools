@@ -33,7 +33,7 @@
     "@retailmenot/core-ui-gitignore": "^1.0.1",
     "eslint": "^4.8.0",
     "mock-fs": "^4.4.1",
-    "tap": "^10.7.2"
+    "tap": "^11.0.0"
   },
   "dependencies": {
     "@retailmenot/roux": "^1.0.1",
