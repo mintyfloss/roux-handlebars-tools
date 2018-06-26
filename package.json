@@ -31,7 +31,7 @@
     "@retailmenot/core-ui-editorconfig": "^1.0.2",
     "@retailmenot/core-ui-eslintrc": "^6.0.0",
     "@retailmenot/core-ui-gitignore": "^1.0.1",
-    "eslint": "^4.19.1",
+    "eslint": "^5.0.1",
     "mock-fs": "^4.5.0",
     "tap": "^11.1.5"
   },
